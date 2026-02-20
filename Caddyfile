@@ -1,0 +1,3 @@
+http://videjuegos.ddns.net {
+    reverse_proxy api:3000
+}
