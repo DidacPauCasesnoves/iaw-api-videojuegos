@@ -1,12 +1,21 @@
 {
-    "name": "iaw-api-videojuegos",
-    "version": "1.0.0",
-    "description": "API RESTful para gestionar videojuegos",
-    "main": "app.js",
-    "scripts": {
-        "start": "node app.js"
-    },
-    "dependencies": {
-        "express": "^4.18.2"
-    }
+  "name": "iaw-api-videojuegos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DidacPauCasesnoves/iaw-api-videojuegos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DidacPauCasesnoves/iaw-api-videojuegos/issues"
+  },
+  "homepage": "https://github.com/DidacPauCasesnoves/iaw-api-videojuegos#readme"
 }
