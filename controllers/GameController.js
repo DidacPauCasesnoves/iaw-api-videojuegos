@@ -1,35 +1,64 @@
 const Game = require('../models/Game');
 const gamesData = require('../data/games.json');
+const fs = require('fs');
 
-exports.getAllGames = (req, res) => {
+//Función para obtener todos los juegos.
+exports.getAllGames = async (req, res) => {
+    
+    const gamesJson = JSON.parse(fs.readFileSync('./data/games.json', 'utf-8'));
+    const games = gamesJson.map(game => 
+        new Game(game.id, game.title, game.genre, game.releaseYear, game.developer, game.score)
+    );
+
+    let filteredGames = [];
+    
     const genreFilter = req.query.genre;
-    let results = gamesData.map(g => new Game(g.id, g.title, g.genre, g.releaseYear, g.developer, g.score));
 
-    if (genreFilter) {
-        results = results.filter(g => g.genre.toLowerCase() === genreFilter.toLowerCase());
+    for (let i = 0; i < games.length; i++) {
+        const game = games[i];
+        if(!genreFilter || game.genre.toLowerCase() === genreFilter.toLowerCase()) {
+            filteredGames.push(game);
+        }
     }
-    res.json(results);
-};
 
-exports.getGameById = (req, res) => {
-    const gameRaw = gamesData.find(g => g.id === parseInt(req.params.id));
-    if (gameRaw) {
-        const game = new Game(gameRaw.id, gameRaw.title, gameRaw.genre, gameRaw.releaseYear, gameRaw.developer, gameRaw.score);
-        res.json(game);
-    } else {
-        res.status(404).json({ error: "Juego no encontrado" });
+    return res.json(filteredGames);
+}
+
+//Función por ID.
+exports.getGameById = async (req, res) => {
+
+    const gamesJson = JSON.parse(fs.readFileSync('./data/games.json', 'utf-8'));
+    const games = gamesJson.map(game =>
+        new Game(game.id, game.title, game.genre, game.releaseYear, game.developer, game.score)
+    );
+
+    let gameFiltrat = null;
+
+    for (let i = 0; i < games.length; i++) {
+        const game = games[i];
+        if(game.id === parseInt(req.params.id)) {
+            gameFiltrat = game;
+        }
     }
-};
 
-exports.calculateGrades = (req, res) => {
-    const students = req.body;
-    const results = students.map(s => {
-        const avg = s.grades.reduce((a, b) => a + b, 0) / s.grades.length;
-        return {
-            student: `${s.surname}, ${s.name}`,
-            finalMark: Math.round(avg)
-        };
-    }).sort((a, b) => a.student.localeCompare(b.student));
+    return res.json(gameFiltrat);
+}
+//Función por nombre
+exports.searchGames = async (req, res) => {
 
-    res.json(results);
-};
+    const gamesJson = JSON.parse(fs.readFileSync('./data/games.json', 'utf-8'));
+    const games = gamesJson.map(game =>
+        new Game(game.id, game.title, game.genre, game.releaseYear, game.developer, game.score)
+    );
+
+    let gamesFiltrats = [];
+
+    for (let i = 0; i < games.length; i++) {
+        const game = games[i];
+        if(game.title.toLowerCase() === req.query.name.toLowerCase()) {
+            gamesFiltrats.push(game);
+        }
+    }
+
+    return res.json(gamesFiltrats);
+}

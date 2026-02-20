@@ -4,6 +4,6 @@ const gameController = require('../controllers/GameController');
 
 router.get('/games', gameController.getAllGames);
 router.get('/games/:id', gameController.getGameById);
-router.post('/calculate', gameController.calculateGrades);
+router.get('/search', gameController.searchGames);
 
 module.exports = router;
