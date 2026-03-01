@@ -1,8 +1,9 @@
 services:
   api:
-    build: .
-    image: ifc31c-iaw-tuapellido-tunombre:v1
+    image: didacab/ifc31c-iaw-amengual-didac:v1
     restart: always
+    networks:
+      - web
 
   caddy:
     image: caddy:latest
@@ -14,6 +15,11 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
+    networks:
+      - web
+
+networks:
+  web:
 
 volumes:
   caddy_data:

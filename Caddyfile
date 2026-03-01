@@ -1,3 +1,4 @@
-http://videjuegos.ddns.net {
-    reverse_proxy api:3000
+videojuegos.ddns.net {
+    encode gzip
+    reverse_proxy api:8080
 }
